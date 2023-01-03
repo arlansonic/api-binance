@@ -23,7 +23,15 @@ setInterval(async () => {
         console.log(`POSIÇÃO DA CARTEIRA:`)
         console.log(coins)
 
-        console.log(await api.accountInfo())
+        console.log('Verificando se tem saldo para comprar...')
+        if (sell <= parseInt(coins.find(c => c.asset === 'BUSD').free)) {
+            console.log('Temos saldo! Comprando agora...')
+
+            const buyOrder = await api.newOrder(symbol, 1)
+            console.log(`orderId: ${buyOrder.orderId}`)
+            console.log(`status: ${buyOrder.status}`)
+        }
+
     } else if (sell > 1000) {
         console.log('Hora de Vender!!')
     } else {
